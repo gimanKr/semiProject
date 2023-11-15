@@ -583,6 +583,7 @@
 			                console.log(res);
 			            },
 			            error: function () {
+			            	 alert("아이디와 이메일을 다시 한번 확인하십시오");
 			                console.log("비밀번호 찾기 중 ajax 통신 실패");
 			            }
 			        });
