@@ -561,7 +561,7 @@
 	
 		<script>
 
-		 function findPwd() {
+		 function findPwdfindPwd() {
 			    const idInput = document.querySelector("#pwdIdCheck").value;
 			    const emailInput = document.querySelector("#pwdEmailCheck").value;
 

@@ -23,6 +23,16 @@
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="DELETE_IMG" property="deleteImg" />
 	</resultMap>
+	<resultMap id="FeedCommentResultSet" type="FeedComment">
+		<result column="COMMENT_NO" property="commentNo" />
+		<result column="COMMENT_TEXT" property="commentText" />
+		<result column="FEED_NO" property="feedNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
+
+	
+	
 	
 	<select id="selectListCount" resultType="_int">
      SELECT COUNT(*)
@@ -82,4 +92,17 @@
 	            	   SYSDATE
 	            	   )
 	</insert>
+		<select id="selectCommentList" resultMap="FeedCommentResultSet">
+	  		SELECT COMMENT_NO,
+					COMMENT_TEXT,
+					FEED_NO,
+					USER_NO,
+					CREATE_DATE
+	  		FROM FEED_COMMENT
+	  		JOIN MEMBER USING (USER_NO)
+	  	    WHERE FEED_NO = #{feedNo}
+	  		ORDER BY COMMENT_NO DESC
+	  	</select>
+	
+	
 </mapper>

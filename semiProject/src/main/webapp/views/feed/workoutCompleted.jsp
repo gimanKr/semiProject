@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+
+	request.setCharacterEncoding("UTF-8");
+
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -134,12 +141,13 @@
 		
 
 		<div class="myFeed">
-			<c:forEach var="f" items="${list}">
+			<c:forEach var="fUnit" items="${fList}">
+			
 				<div class="user-info">
 					<div class="user-info2">
 						<i style="float: left; margin-top: 5px;"
 							class="fa-regular fa-user fs-1"></i>
-						<p style="float: left; margin-left: 20px; margin-top: 15px;">${f.userNo}</p>
+						<p style="float: left; margin-left: 20px; margin-top: 15px;">${fUnit.feed.userNo}</p>
 					</div>
 				</div>
 
@@ -156,18 +164,18 @@
 						</div>
 						<div class="carousel-inner">
 							<div class="carousel-item active" data-bs-interval="10000">
-								<img src="./${f.feedUrl}${f.changeName }" class="d-block w-100"
+								<img src="./${fUnit.feed.feedUrl}${fUnit.feed.changeName }" class="d-block w-100"
 									alt="...">
 							</div>
 							<div class="carousel-item" data-bs-interval="2000">
-								<img src="./${f.feedUrl}${f.changeName }" class="d-block w-100"
+								<img src="./${fUnit.feed.feedUrl}${fUnit.feed.changeName}" class="d-block w-100"
 									alt="...">
 							</div>
 							<div class="carousel-item">
-								<img src="./${f.feedUrl}${f.changeName }" class="d-block w-100"
+								<img src="./${fUnit.feed.feedUrl}${fUnit.feed.changeName }" class="d-block w-100"
 									alt="...">
 							</div>
-							<!-- <button class="carousel-control-prev" type="button"
+							<button class="carousel-control-prev" type="button"
 								data-bs-target="#carouselExampleDark" data-bs-slide="prev">
 								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">Previous</span>
@@ -176,7 +184,7 @@
 								data-bs-target="#carouselExampleDark" data-bs-slide="next">
 								<span class="carousel-control-next-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">Next</span>
-							</button> -->
+							</button>
 						</div>
 					</div>
 				</div>
@@ -191,7 +199,7 @@
 				</div>
 
 				<script>
-                countLike= () =>{
+                countLike = function(){
                     $.ajax({
                         url: "countLike",
                         data:{
@@ -226,17 +234,32 @@
 								<th style="vertical-align: middle"><button
 										class="btn btn-primary" onclick="addReply();">댓글등록</button></th>
 							</tr>
+							<tr>
+								<td>댓글(<span id="rcount">2</span>)
+								</td>
+							</tr>
+							<script>
+										
+										const tmp = ${fUnit.comment}.length
+										
+										
+							</script>
+							<c:forEach var="i" items="${fUnit.comment}">
+							
+								<tr>
+									<th>${fUnit.comment}</th>
+        							<td></td>
+        							<td></td>
+								</tr>
+							</c:forEach>
 							
 						</thead>
-						<tbody>
+						<tbody id ="">
 
 						</tbody>
 					</table>
 
 				</div>
-				<script>
-				
-				</script>
 			</c:forEach>
 		</div>
 		<br>
@@ -271,6 +294,7 @@
 			</ul>
 		</div>
 	</div>
+		 
 
 </body>
 </html>

@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.kh.mybatis.board.model.service.BoardServiceImpl;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.kh.mybatis.common.model.vo.PageInfo;
 import com.kh.mybatis.common.template.Pagenation;
 import com.kh.mybatis.feed.model.service.FeedServiceImpl;
 import com.kh.mybatis.feed.model.vo.Feed;
+import com.kh.mybatis.feed.model.vo.FeedComment;
 
 /**
  * Servlet implementation class FeedListController
@@ -41,12 +43,24 @@ public class FeedListController extends HttpServlet {
 		int currentPage = Integer.parseInt(request.getParameter("cpage"));; //현재 페이지(즉, 사용자가 요청한 페이지)
 		
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, 10, 5);
-		
 		ArrayList<Feed> list = new FeedServiceImpl().selectList(pi);
-
+		
+		
+		JSONArray fList = new JSONArray();
+		for (Feed f : list) {		
+			JSONObject fUnit = new JSONObject();
+			System.out.println(f);
+			fUnit.put("feed", f);
+			fUnit.put("comment", new FeedServiceImpl().selectCommentList(f.getFeedNo()));
+			fList.add(fUnit);
+		}
+		
+		
+	
+		
 		request.setAttribute("pi", pi);
-		request.setAttribute("list", list);
-		new Gson().toJson(list, response.getWriter());
+		request.setAttribute("fList", fList);
+		
 		
 		
 		request.getRequestDispatcher("/views/feed/workoutCompleted.jsp").forward(request, response);

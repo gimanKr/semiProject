@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.kh.mybatis.board.model.vo.BoardComment;
 import com.kh.mybatis.common.model.vo.PageInfo;
 import com.kh.mybatis.feed.model.vo.Feed;
+import com.kh.mybatis.feed.model.vo.FeedComment;
 import com.kh.mybatis.feed.model.vo.FeedImg;
 import com.kh.mybatis.feed.model.vo.FeedLike;
 
@@ -38,5 +40,10 @@ public class FeedDao {
 	
 	public int insertFeedImg(SqlSession sqlSession, FeedImg fe) {
 		return sqlSession.insert("feedMapper.insertFeedImg", fe);
+	}
+	
+	public ArrayList<FeedComment> selectCommentList(SqlSession sqlSession, int feedNo) {
+		System.out.println(feedNo);
+		return (ArrayList)sqlSession.selectList("feedMapper.selectCommentList", feedNo);
 	}
 }

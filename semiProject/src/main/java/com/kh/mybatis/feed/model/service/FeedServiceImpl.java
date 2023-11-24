@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.kh.mybatis.board.model.vo.BoardComment;
 import com.kh.mybatis.common.model.vo.PageInfo;
 import com.kh.mybatis.common.template.Template;
 import com.kh.mybatis.feed.model.dao.FeedDao;
 import com.kh.mybatis.feed.model.vo.Feed;
+import com.kh.mybatis.feed.model.vo.FeedComment;
 import com.kh.mybatis.feed.model.vo.FeedImg;
 import com.kh.mybatis.feed.model.vo.FeedLike;
 
@@ -59,6 +61,15 @@ public class FeedServiceImpl implements FeedService{
 		
 		return result1*result2;
 				
+	}
+
+	@Override
+	public ArrayList<FeedComment> selectCommentList(int feedNo) {
+		SqlSession sqlSession = Template.getSqlSession();
+		ArrayList<FeedComment> list = fDao.selectCommentList(sqlSession, feedNo);
+		
+		sqlSession.close();
+		return list;
 	}
 
 }
