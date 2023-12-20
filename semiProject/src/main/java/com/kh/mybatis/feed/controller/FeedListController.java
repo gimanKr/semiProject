@@ -9,14 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
+import com.kh.mybatis.board.model.service.BoardServiceImpl;
 import com.kh.mybatis.common.model.vo.PageInfo;
 import com.kh.mybatis.common.template.Pagenation;
 import com.kh.mybatis.feed.model.service.FeedServiceImpl;
 import com.kh.mybatis.feed.model.vo.Feed;
-import com.kh.mybatis.feed.model.vo.FeedComment;
 
 /**
  * Servlet implementation class FeedListController
@@ -40,26 +37,18 @@ public class FeedListController extends HttpServlet {
 		
 		//-------------------페이징 처리----------------------------
 		int listCount = new FeedServiceImpl().selectListCount(); //현재 총 게시글 수
-		int currentPage = Integer.parseInt(request.getParameter("cpage"));; //현재 페이지(즉, 사용자가 요청한 페이지)
+		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
 		
 		PageInfo pi = Pagenation.getPageInfo(listCount, currentPage, 10, 5);
+		
 		ArrayList<Feed> list = new FeedServiceImpl().selectList(pi);
 		
-		
-		JSONArray fList = new JSONArray();
-		for (Feed f : list) {		
-			JSONObject fUnit = new JSONObject();
-			System.out.println(f);
-			fUnit.put("feed", f);
-			fUnit.put("comment", new FeedServiceImpl().selectCommentList(f.getFeedNo()));
-			fList.add(fUnit);
+		for(Feed a : list) {
+			System.out.println(a.getFeedNo());
 		}
 		
-		
-	
-		
 		request.setAttribute("pi", pi);
-		request.setAttribute("fList", fList);
+		request.setAttribute("list", list);
 		
 		
 		

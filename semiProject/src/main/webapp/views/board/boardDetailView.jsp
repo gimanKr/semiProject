@@ -31,7 +31,6 @@
 			width: 75%;
 			height: auto;
 			margin: auto;
-			opacity: 0.7;
     	}
 
 		a {
@@ -62,7 +61,6 @@
 			height: 300px;
 			background-color: gray;
 			border-radius: 15px;
-			opacity: 0.7;
 			/* margin-left: 30px; */
 		}
 		.board-comment{
@@ -74,7 +72,7 @@
 	</style>
 </head>
 
-
+	
 	<body>
 		 <!--상단바를 보여주는 부분-->
 		 <jsp:include page="/views/common/menubar.jsp" />
@@ -89,13 +87,13 @@
 		</div>
         <br>
 		<div class="detail-area" align="center">
+			<div class="detail-img-area" align="center">
+				<c:if test="${ !empty bImg.changeName}">
+					<img src="${bImg.boardImg}${bImg.changeName}" style="margin-bottom: 25px; max-width: 500px;">
+				</c:if>	 
+			</div>
 			<div class="detail-area-content">
 				${b.boardContent}
-			</div>
-			<div class="detail-img-area" align="center">
-				<div class="detail-img">
-					 
-				</div>
 			</div>
 		</div>
 		<hr>
@@ -130,10 +128,35 @@
 		</table>
 		
 		 <script>
+	
+		 
+		 	$(function(){
+		 			loadBoardImg();
+			})
+		 	
+		 	function loadBoardImg(){
+		 		$.ajax({
+					url : "selectImg.bo" ,
+					data : {'boardNo' : "${Board.boardNo}"},
+					success: function(boardImg){
+						let str = "";
+						if(boardImg != '"NNN"'){
+							str += ('<img src="/ex/'+ boardImg +'" style="width: 200px; height: 200px;" />')
+							
+						}else{
+						}
+						document.querySelector(".detail-img").innerHTML = str;
+					},
+					error: function(){
+						console.log("selectImg ajax 실패");
+					}
+				})
+			}
+		 	
+		 
+		 
 			window.onload =() =>{
 				selectCommentList();
-				
-				
 			}
 
             function selectCommentList(){
@@ -194,7 +217,6 @@
                     }
                 })
             }
-
         </script>
 		
 		<hr>
@@ -215,7 +237,7 @@
 		<div align="right" style="margin-top: 25px;">
 			<a class="btn btn-sm btn-secondary" href="updateForm.bo?bno=${b.boardNo}">수정</a>
 			<a class="btn btn-sm btn-secondary" href="delete.bo?bno=${b.boardNo}">삭제</a>
-			<a class="btn btn-sm btn-secondary">목록가기</a>
+			<a class="btn btn-sm btn-secondary" href="list.bo?cpage=1">목록가기</a>
 
 		</div>	
 		

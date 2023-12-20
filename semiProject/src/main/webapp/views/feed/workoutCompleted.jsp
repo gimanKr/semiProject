@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%
-
-	request.setCharacterEncoding("UTF-8");
-
-%>
-
 
 <!DOCTYPE html>
 <html>
@@ -134,20 +127,18 @@
 
 
 		<div align="right">
-			<a
-				href="${pageContext.request.contextPath}/views/feed/feedEnroll.jsp"
+			<a href="enrollForm.fe"
 				class="btn btn-primary">피드등록</a>
 		</div>
-		
+
 
 		<div class="myFeed">
-			<c:forEach var="fUnit" items="${fList}">
-			
+			<c:forEach var="f" items="${list}">
 				<div class="user-info">
 					<div class="user-info2">
 						<i style="float: left; margin-top: 5px;"
 							class="fa-regular fa-user fs-1"></i>
-						<p style="float: left; margin-left: 20px; margin-top: 15px;">${fUnit.feed.userNo}</p>
+						<p style="float: left; margin-left: 20px; margin-top: 15px;">${f.userNo}</p>
 					</div>
 				</div>
 
@@ -164,15 +155,15 @@
 						</div>
 						<div class="carousel-inner">
 							<div class="carousel-item active" data-bs-interval="10000">
-								<img src="./${fUnit.feed.feedUrl}${fUnit.feed.changeName }" class="d-block w-100"
+								<img src="./${f.feedUrl}${f.changeName }" class="d-block w-100"
 									alt="...">
 							</div>
 							<div class="carousel-item" data-bs-interval="2000">
-								<img src="./${fUnit.feed.feedUrl}${fUnit.feed.changeName}" class="d-block w-100"
+							 	<img src="./${f.feedUrl}${f.changeName }" class="d-block w-100"
 									alt="...">
 							</div>
 							<div class="carousel-item">
-								<img src="./${fUnit.feed.feedUrl}${fUnit.feed.changeName }" class="d-block w-100"
+								<img src="./${f.feedUrl}${f.changeName }" class="d-block w-100"
 									alt="...">
 							</div>
 							<button class="carousel-control-prev" type="button"
@@ -194,20 +185,21 @@
 						<input type="image"
 							src="./resources/feed-upfile/KakaoTalk_20231110_162616520_02.png"
 							style="width: 27px; height: 27px; margin-right: 10px;">
-						<p class="like">좋아요 8개</p>
+						<p id="like"></p>
 					</div>
 				</div>
 
 				<script>
-                countLike = function(){
+			
+                countLike= () =>{
                     $.ajax({
-                        url: "countLike",
+                        url: "countLike.fe",
                         data:{
-                            userNo : "${loginUser.userNo}",
-                            feedNo : 1
+                            feedNo : "${f.feedNo}"
                         },
                         success:(result)=>{
-                            document.querySelector("#like").innerHTML = result
+							console.log(result)
+                            document.querySelector("#like").innerText = "좋아요 "+result+"개"
                         },
                         error:()=>{
 
@@ -219,7 +211,7 @@
 				<div class="user-info">
 					<div class="user-info4">
 						<p style="margin-right: 5px;">
-							user01 <br>
+							${f.userNo} <br>
 						</p>
 						<p>${f.feedText}</p>
 					</div>
@@ -238,23 +230,18 @@
 								<td>댓글(<span id="rcount">2</span>)
 								</td>
 							</tr>
-							<script>
-										
-										const tmp = ${fUnit.comment}.length
-										
-										
-							</script>
-							<c:forEach var="i" items="${fUnit.comment}">
-							
-								<tr>
-									<th>${fUnit.comment}</th>
-        							<td></td>
-        							<td></td>
-								</tr>
-							</c:forEach>
-							
+							<tr>
+								<th>user07</th>
+								<td>화이팅화이팅!</td>
+								<td>2023-11-10</td>
+							</tr>
+							<tr>
+								<th>user08</th>
+								<td>이욜~~~</td>
+								<td>2023-11-09</td>
+							</tr>
 						</thead>
-						<tbody id ="">
+						<tbody>
 
 						</tbody>
 					</table>
@@ -294,7 +281,6 @@
 			</ul>
 		</div>
 	</div>
-		 
 
 </body>
 </html>

@@ -87,6 +87,9 @@ public class BoardServiceImpl implements BoardService{
 	public BoardImg selectBoardImg(int boardNo) {
 		SqlSession sqlSession = Template.getSqlSession();
 		BoardImg bImg = bDao.selectBoardImg(sqlSession, boardNo);
+		
+		System.out.println(bImg);
+		
 		sqlSession.close();
 		return bImg;
 	}
@@ -116,7 +119,6 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteBoard(int boardNo) {
 		SqlSession sqlSession = Template.getSqlSession();
 		int result = bDao.deleteBoard(sqlSession, boardNo);
-		sqlSession.close();
 		if(result > 0) {
 			sqlSession.commit();
 		}
@@ -137,6 +139,14 @@ public class BoardServiceImpl implements BoardService{
 		}
 		sqlSession.close();
 		return (result1 * result2);
+	}
+
+	@Override
+	public ArrayList<Board> selecttopFiveList() {
+		SqlSession sqlSession = Template.getSqlSession();
+		ArrayList<Board> list =  bDao.selecttopFiveList(sqlSession);
+		sqlSession.close();
+		return list;
 	}
 	
 	@Override
@@ -162,5 +172,7 @@ public class BoardServiceImpl implements BoardService{
 		sqlSession.close();
 		return result;
 	}
+	
+	
 	
 }

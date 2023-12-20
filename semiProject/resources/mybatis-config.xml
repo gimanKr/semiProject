@@ -11,13 +11,19 @@
     </settings>
     <typeAliases>
        <typeAlias type="com.kh.mybatis.member.model.vo.Member" alias="Member" />
+       <typeAlias type="com.kh.mybatis.member.model.vo.ProfileImg" alias="ProfileImg" />
        <typeAlias type="com.kh.mybatis.chart.model.vo.Chart" alias="Chart"/>
        <typeAlias type="com.kh.mybatis.board.model.vo.Board" alias="Board"/>
        <typeAlias type="com.kh.mybatis.board.model.vo.BoardComment" alias="BoardComment"/>
        <typeAlias type="com.kh.mybatis.board.model.vo.BoardImg" alias="BoardImg"/>
        <typeAlias type="com.kh.mybatis.feed.model.vo.Feed" alias="Feed"/>
+       <typeAlias type="com.kh.mybatis.member.model.vo.Follow" alias="Follow"/>
        <typeAlias type="com.kh.mybatis.feed.model.vo.FeedImg" alias="FeedImg"/>
+<<<<<<< HEAD
        <typeAlias type="com.kh.mybatis.feed.model.vo.FeedComment" alias="FeedComment"/>
+=======
+       <typeAlias type="com.kh.mybatis.feed.model.vo.FeedLike" alias="FeedLike"/>
+>>>>>>> e65aa66b54b7a6f7882b0fe8a9f7eeaec6e174e7
     </typeAliases>
     
     <environments default="development">

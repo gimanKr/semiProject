@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.kh.mybatis.board.model.vo.BoardComment;
 import com.kh.mybatis.common.model.vo.PageInfo;
 import com.kh.mybatis.common.template.Template;
 import com.kh.mybatis.feed.model.dao.FeedDao;
 import com.kh.mybatis.feed.model.vo.Feed;
-import com.kh.mybatis.feed.model.vo.FeedComment;
 import com.kh.mybatis.feed.model.vo.FeedImg;
 import com.kh.mybatis.feed.model.vo.FeedLike;
 
@@ -44,6 +42,12 @@ public class FeedServiceImpl implements FeedService{
 	}
 
 	@Override
+	public ArrayList<Feed> selectMyFeed(int userNo) {
+		SqlSession sqlSession = Template.getSqlSession();
+		ArrayList<Feed> fList = fDao.selectMyFeed(sqlSession, userNo);
+		sqlSession.close();
+		return fList;
+	}
 	public int insertFeed(Feed f, ArrayList<FeedImg> list) {
 		SqlSession sqlSession = Template.getSqlSession();
 		
@@ -60,16 +64,17 @@ public class FeedServiceImpl implements FeedService{
 		sqlSession.close();
 		
 		return result1*result2;
-				
 	}
 
+
 	@Override
-	public ArrayList<FeedComment> selectCommentList(int feedNo) {
+	public int insertLike(FeedLike like) {
 		SqlSession sqlSession = Template.getSqlSession();
-		ArrayList<FeedComment> list = fDao.selectCommentList(sqlSession, feedNo);
-		
-		sqlSession.close();
-		return list;
+		int result = fDao.insertLike(sqlSession, like);
+		if(result > 0) {
+			sqlSession.commit();
+		}
+		return result;
 	}
 
 }
